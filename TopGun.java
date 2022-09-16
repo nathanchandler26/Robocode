@@ -25,7 +25,7 @@ public class TopGun extends Robot
 			// Replace the next 4 lines with any behavior you would like
 			ahead(100);
 			turnGunRight(360);
-			back(80);
+			back(100);
 			turnGunRight(360);
 		}
 	}
@@ -39,20 +39,20 @@ public class TopGun extends Robot
 		{ 
 			if (e.getDistance() < 50) // If enemy is less than 50 away do this
 			{
-				fire(1);
+				fire(4);
 			}
 			else if (e.getDistance() < 100) // If enemy is less than 100 away do this
 			{
-				fire(2);
+				fire(3);
 			}
 			else
 			{
-				fire(3); // If enemy is over 100 away do this
+				fire(2); // If enemy is over 100 away do this
 			}
 		}
 		else // If the energy level is below 50 do this
 		{
-			fire(5);
+			fire(1);
 		}
 	}
 
@@ -61,7 +61,7 @@ public class TopGun extends Robot
 	 */
 	public void onHitByBullet(HitByBulletEvent e) {
 		// Replace the next line with any behavior you would like
-		back(50);
+		back(20);
 	}
 	
 	/**
@@ -69,8 +69,7 @@ public class TopGun extends Robot
 	 */
 	public void onHitWall(HitWallEvent e) {
 		// Replace the next line with any behavior you would like
-		turnRight(-e.getBearing()); // Turn when you hit a wall
-		ahead(100); // Move forward again
+		back(20);
 	}	
 	
 	public void onWin(WinEvent e) { // Victory dance
