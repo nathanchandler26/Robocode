@@ -5,7 +5,7 @@ import java.awt.Color;
 // API help : https://robocode.sourceforge.io/docs/robocode/robocode/Robot.html
 
 /**
- * TopGun - a robot by Nate Chandler, Tanner Bacon, Scott Olson, Yun-Chen Lee, and Bryson Barrow
+ * TopGun - a robot by Nate Chandler, Tanner Bacon, Yun-Chen Lee, and Bryson Barrow
  */
 public class TopGun extends Robot
 {
@@ -27,6 +27,8 @@ public class TopGun extends Robot
 			turnGunRight(360);
 			back(100);
 			turnGunRight(360);
+			//setAdjustRadarForRobotTurn(true); // Keep the radar still when bot turns
+			//setAdjustGunForRobotTurn(true); // Keep the gun still when bot turns
 		}
 	}
 
@@ -39,20 +41,20 @@ public class TopGun extends Robot
 		{ 
 			if (e.getDistance() < 50) // If enemy is less than 50 away do this
 			{
-				fire(4);
+				fire(1);
 			}
 			else if (e.getDistance() < 100) // If enemy is less than 100 away do this
 			{
-				fire(3);
+				fire(2);
 			}
 			else
 			{
-				fire(2); // If enemy is over 100 away do this
+				fire(3); // If enemy is over 100 away do this
 			}
 		}
 		else // If the energy level is below 50 do this
 		{
-			fire(1);
+			fire(5);
 		}
 	}
 
@@ -69,7 +71,8 @@ public class TopGun extends Robot
 	 */
 	public void onHitWall(HitWallEvent e) {
 		// Replace the next line with any behavior you would like
-		back(20);
+		turnRight(-e.getBearing()); //Turn when you hit a wall
+		ahead(100);
 	}	
 	
 	public void onWin(WinEvent e) { // Victory dance
