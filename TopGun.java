@@ -25,7 +25,7 @@ public class TopGun extends Robot
 			// Replace the next 4 lines with any behavior you would like
 			ahead(100);
 			turnGunRight(360);
-			back(100);
+			back(75);
 			turnGunRight(360);
 			//setAdjustRadarForRobotTurn(true); // Keep the radar still when bot turns
 			//setAdjustGunForRobotTurn(true); // Keep the gun still when bot turns
@@ -76,7 +76,12 @@ public class TopGun extends Robot
 	}	
 	
 	public void onWin(WinEvent e) { // Victory dance
-		setAllColors(Color.white);
+		for (int i = 0; i < 50; i++) {
+			turnRight(40);
+			turnLeft(40);
+			turnRight(20);
+			turnLeft(20);
+		}
 	}
 
 }
