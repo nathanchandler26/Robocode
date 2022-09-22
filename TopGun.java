@@ -9,6 +9,7 @@ import java.awt.Color;
  */
 public class TopGun extends Robot
 {
+	boolean forward = true;
 	/**
 	 * run: TopGun's default behavior
 	 */
@@ -24,8 +25,10 @@ public class TopGun extends Robot
 		while(true) {
 			// Replace the next 4 lines with any behavior you would like
 			ahead(100);
+			forward = true;
 			turnGunRight(360);
 			back(75);
+			forward = false;
 			turnGunRight(360);
 			//setAdjustRadarForRobotTurn(true); // Keep the radar still when bot turns
 			//setAdjustGunForRobotTurn(true); // Keep the gun still when bot turns
@@ -79,15 +82,27 @@ public class TopGun extends Robot
 	public void onHitByBullet(HitByBulletEvent e) {
 		// Replace the next line with any behavior you would like
 		back(20);
+		forward = false;
 	}
 	
 	/**
 	 * onHitWall: What to do when you hit a wall
 	 */
+	 */
 	public void onHitWall(HitWallEvent e) {
-		// Replace the next line with any behavior you would like
-		turnRight(-e.getBearing()); //Turn when you hit a wall
-		ahead(100);
+		if (movingForward) { 	//if moving forward bounce off the wall
+			back(75);
+			turnRight(30);
+			back(15);
+			turnRight(60);
+			forward = false;
+		} else{
+			ahead(75); //if moving backward bounch off the wall
+			turnRight(30);
+			ahead(15);
+			turnRight(60);
+			forward = true;
+		}
 	}	
 	
 	public void onWin(WinEvent e) { // Victory dance
