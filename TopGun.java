@@ -79,6 +79,7 @@ public class TopGun extends Robot
 	/**
 	 * onHitByBullet: What to do when you're hit by a bullet
 	 */
+	
 	public void onHitByBullet(HitByBulletEvent e) {
 		// Replace the next line with any behavior you would like
 		back(20);
@@ -88,9 +89,9 @@ public class TopGun extends Robot
 	/**
 	 * onHitWall: What to do when you hit a wall
 	 */
-	 */
+	 
 	public void onHitWall(HitWallEvent e) {
-		if (movingForward) { 	//if moving forward bounce off the wall
+		if (forward) { 	//if moving forward bounce off the wall
 			back(75);
 			turnRight(30);
 			back(15);
