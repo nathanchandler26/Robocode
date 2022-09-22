@@ -23,15 +23,20 @@ public class TopGun extends Robot
 
 		// Robot main loop
 		while(true) {
-			// Replace the next 4 lines with any behavior you would like
-			ahead(100);
-			forward = true;
-			turnGunRight(360);
-			back(75);
-			forward = false;
-			turnGunRight(360);
-			//setAdjustRadarForRobotTurn(true); // Keep the radar still when bot turns
-			//setAdjustGunForRobotTurn(true); // Keep the gun still when bot turns
+			setAdjustRadarForRobotTurn(true); // Keep the radar still when bot turns
+            setAdjustGunForRobotTurn(true); // Keep the gun still when bot turns
+            ahead(100);
+            forward = true;
+            turnGunRight(360);
+            turnLeft(30);
+            forward = false;
+            turnGunRight(180);
+            back(50);
+            forward = false;
+            turnGunRight(360);
+            turnRight(30);
+            forward = false;
+            turnGunRight(180);
 		}
 	}
 
