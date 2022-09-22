@@ -23,15 +23,22 @@ public class TopGun extends Robot
 
 		// Robot main loop
 		while(true) {
+<<<<<<< HEAD
 			// Replace the next 4 lines with any behavior you would like
 
 			/*
+=======
+>>>>>>> f6518bdb158cc59ea7efadd0d31b8cfdad6adfb2
 			setAdjustRadarForRobotTurn(true); // Keep the radar still when bot turns
             setAdjustGunForRobotTurn(true); // Keep the gun still when bot turns
             ahead(100);
             forward = true;
             turnGunRight(360);
             turnLeft(30);
+<<<<<<< HEAD
+=======
+            forward = false;
+>>>>>>> f6518bdb158cc59ea7efadd0d31b8cfdad6adfb2
             turnGunRight(180);
             back(50);
             forward = false;
@@ -39,6 +46,7 @@ public class TopGun extends Robot
             turnRight(30);
             forward = false;
             turnGunRight(180);
+<<<<<<< HEAD
 			turnRight(3);
 			*/
 			
@@ -51,6 +59,8 @@ public class TopGun extends Robot
 		
 			//setAdjustRadarForRobotTurn(true); // Keep the radar still when bot turns
 			//setAdjustGunForRobotTurn(true); // Keep the gun still when bot turns
+=======
+>>>>>>> f6518bdb158cc59ea7efadd0d31b8cfdad6adfb2
 		}
 	}
 
@@ -65,6 +75,7 @@ public class TopGun extends Robot
 		if (Energy > 50) // If the energy level is over 50 do this
 		{ 
 			if (Distance < 50) // If enemy is less than 50 away do this
+<<<<<<< HEAD
 			{
 				fire(5);
 			}
@@ -92,13 +103,44 @@ public class TopGun extends Robot
 		else // If energy is less than 25
 		{
 			fire(2);
+=======
+			{
+				fire(5);
+			}
+			else if (Distance < 100) // If enemy is less than 100 away do this
+			{
+				fire(4);
+			}
+			else if (Distance < 150) // If enemy is less than 150 away do this
+			{
+				fire(3);
+			}
+			else if (Distance < 200) // If enemy is less than 200 away do this
+			{
+				fire(2);
+			}	
+			else
+			{
+				fire(1); // If enemy is over 200 away do this
+			}
+		}
+		else if (Energy > 25) // If the energy level is < 50 and > 25
+		{
+			fire(1);
+		}
+		else // If energy is less than 25
+		{
+			fire(.5);
+>>>>>>> f6518bdb158cc59ea7efadd0d31b8cfdad6adfb2
 		}
 	}
 
 	/**
 	 * onHitByBullet: What to do when you're hit by a bullet
 	 */
+	
 	public void onHitByBullet(HitByBulletEvent e) {
+<<<<<<< HEAD
 		turnGunRight(e.getBearing() + getHeading());
 		fire(2);
 		// Change body color to indicate the power of the bullet
@@ -135,11 +177,17 @@ public class TopGun extends Robot
 		}
 
 		setBodyColor(Color.black);
+=======
+		// Replace the next line with any behavior you would like
+		back(20);
+		forward = false;
+>>>>>>> f6518bdb158cc59ea7efadd0d31b8cfdad6adfb2
 	}
 	
 	/**
 	 * onHitWall: What to do when you hit a wall
 	 */
+	 
 	public void onHitWall(HitWallEvent e) {
 		if (forward) { 	//if moving forward bounce off the wall
 			back(75);
