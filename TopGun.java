@@ -23,36 +23,40 @@ public class TopGun extends Robot
 
 		// Robot main loop
 		while(true) {
-
+	
 			// Replace the next 4 lines with any behavior you would like
+			
+/*
+			if (nearWall()) {
+			
+				if (forward) { 	//if moving forward bounce off the wall
+					back(75);
+					turnRight(30);
+					back(15);
+					turnRight(60);
+					forward = false;
+				} else{
+					ahead(75); //if moving backward bounch off the wall
+					turnRight(30);
+					ahead(15);
+					turnRight(60);
+					forward = true;
+				}
+			}
+*/
 
-			/*
-			setAdjustRadarForRobotTurn(true); // Keep the radar still when bot turns
-            setAdjustGunForRobotTurn(true); // Keep the gun still when bot turns
-            ahead(100);
-            forward = true;
-            turnGunRight(360);
-            turnLeft(30);
-            forward = false;
+			setAdjustRadarForRobotTurn(false); // Keep the radar still when bot turns
+            setAdjustGunForRobotTurn(false); // Keep the gun still when bot turns
+			ahead(100);
+			forward = true;
+			turnLeft(30);
             turnGunRight(180);
             back(50);
-            forward = false;
+			forward = false;
             turnGunRight(360);
             turnRight(30);
-            forward = false;
             turnGunRight(180);
-			turnRight(3);
-			*/
-			
-			ahead(150);
-			forward = true;
-			turnRight(30);
-			back(80);
-			forward = false;
-			turnGunRight(360);
-		
-			//setAdjustRadarForRobotTurn(true); // Keep the radar still when bot turns
-			//setAdjustGunForRobotTurn(true); // Keep the gun still when bot turns
+			turnRight(3);			
 		}
 	}
 
@@ -63,6 +67,11 @@ public class TopGun extends Robot
 		// Replace the next line with any behavior you would like
 		double Energy =  e.getEnergy(); // Gets the energy of TopGun
 		double Distance = e.getDistance(); // Gets the dstance of the scanned robot		
+		
+		if (e.getVelocity() <= 1.5) {
+			fire(5);
+			fire(5);
+		} 
 
 		if (Energy > 50) // If the energy level is over 50 do this
 		{ 
@@ -93,7 +102,12 @@ public class TopGun extends Robot
 		}
 		else // If energy is less than 25
 		{
-			fire(2);
+			if (Distance < 100) {
+				fire(3);
+			}
+			else {
+				fire(1);
+			}
 		}
 	}
 
@@ -102,8 +116,8 @@ public class TopGun extends Robot
 	 */
 	public void onHitByBullet(HitByBulletEvent e) {
 		// Return fire
-		turnGunRight(e.getBearing() + getHeading());
-		fire(2);
+		//turnGunRight(e.getBearing());
+		//fire(2);
 
 		// Change body color to indicate the power of the bullet
 		if (e.getPower() >= 3) {
@@ -114,30 +128,32 @@ public class TopGun extends Robot
 			setBodyColor(Color.yellow);
 		}
 		
-		// This will evade by turning and then moving if the bullet comes from the front or the back
-		if ((e.getBearing() > -50 && e.getBearing() < 50) || (e.getBearing() < -130 && e.getBearing() > 130)) {
-			// if the bullet comes from the front then turn right, evade, and turn left to scan the robot
-			if (e.getBearing() > -50 && e.getBearing() < 50) {
-				turnRight(60);
+		if (!nearWall()) { 
+
+			// This will evade by turning and then moving if the bullet comes from the front or the back
+			if ((e.getBearing() > -50 && e.getBearing() < 50) || (e.getBearing() < -130 && e.getBearing() > 130)) {
+				// if the bullet comes from the front then turn right, evade, and turn left to scan the robot
+				if (e.getBearing() > -50 && e.getBearing() < 50) {
+					turnRight(60);
+					ahead(150);
+					forward = true;
+				} else { // if the bullet was from behind then turn right, evade, and keep turning right to scan the robot
+					turnRight(120);
+					ahead(50);
+					forward = true;
+				}
+			} else { // if the hit came from the side, move forward first and then turn to scan the robot
 				ahead(150);
 				forward = true;
-			} else { // if the bullet was from behind then turn right, evade, and keep turning right to scan the robot
-				turnRight(120);
-				ahead(50);
-				forward = true;
+				if (e.getBearing() < -50 && e.getBearing() > -130) {
+					turnLeft(e.getBearing() + 45);
+				} else {
+					turnRight(e.getBearing() + 45);
+				}
+				back(20);
+				forward = false;
 			}
-		} else { // if the hit came from the side, move forward first and then turn to scan the robot
-			ahead(150);
-			forward = true;
-			if (e.getBearing() < -50 && e.getBearing() > -130) {
-				turnLeft(e.getBearing() + 45);
-			} else {
-				turnRight(e.getBearing() + 45);
-			}
-			back(20);
-			forward = false;
 		}
-
 		setBodyColor(Color.black);
 	}
 	
@@ -146,18 +162,22 @@ public class TopGun extends Robot
 	 */
 	 
 	public void onHitWall(HitWallEvent e) {
+		turnRight(20);		
+
 		if (forward) { 	//if moving forward bounce off the wall
-			back(75);
-			turnRight(30);
-			back(15);
-			turnRight(60);
+			back(200);
+			//turnRight(30);
+			//back(15);
+			//turnRight(60);
 			forward = false;
+			turnRight(8);
 		} else{
-			ahead(75); //if moving backward bounch off the wall
-			turnRight(30);
-			ahead(15);
-			turnRight(60);
+			ahead(200); //if moving backward bounch off the wall
+			//turnRight(30);
+			//ahead(15);
+			//turnRight(60);
 			forward = true;
+			turnRight(8);
 		}
 	}	
 	
@@ -177,5 +197,27 @@ public class TopGun extends Robot
 			}
 		}
 	}
-
+	public boolean nearWall() {
+		if(forward){
+		    if(getX() + 100 >= getBattleFieldWidth() && getHeading() > 270 - 45 && getHeading() < 270 + 45)
+		    return true;
+		    if(getX() - 100 <= 0 && getHeading() > 45 && getHeading() < 135)
+		    return true;
+		    if(getY() + 100 >= getBattleFieldHeight() && getHeading() > 180 - 45 && getHeading() < 180 + 45)
+		    return true;
+		    if(getY() - 100 <= 0 && getHeading() > 360 - 45 && getHeading() < 45)
+		    return true;
+		    }
+		else{
+			if(getX() + 100 >= getBattleFieldWidth() && getHeading() > 45 && getHeading() < 135)
+			return true;
+			if(getX() - 100 <= 0 && getHeading() > 270 - 45 && getHeading() < 270 + 45)
+			return true;
+			if(getY() + 100 >= getBattleFieldHeight() && getHeading() > 360 - 45 && getHeading() < 45)
+			return true;
+			if(getY() - 100 <= 0 && getHeading() > 180 - 45 && getHeading() < 180 + 45)
+			return true;
+		}
+			return false;
+		}			
 }
