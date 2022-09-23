@@ -20,42 +20,27 @@ public class TopGun extends Robot
 		// and the next line:
 
 		setColors(Color.black,Color.darkGray,Color.blue); // body,gun,radar -- Set the colors
+		setAdjustRadarForRobotTurn(false); // Keep the radar still when bot turns
+        setAdjustGunForRobotTurn(false); // Keep the gun still when bot turns
+		int turn = 1;
 
 		// Robot main loop
 		while(true) {
-	
+		
 			// Replace the next 4 lines with any behavior you would like
-			
-/*
-			if (nearWall()) {
-			
-				if (forward) { 	//if moving forward bounce off the wall
-					back(75);
-					turnRight(30);
-					back(15);
-					turnRight(60);
-					forward = false;
-				} else{
-					ahead(75); //if moving backward bounch off the wall
-					turnRight(30);
-					ahead(15);
-					turnRight(60);
-					forward = true;
-				}
-			}
-*/
+			if (turn > 0) {
+				ahead(100);
+				forward = true;
+				turnLeft(30);
+	            turnGunLeft(180);
+			} else {
+            	back(60);
+				forward = false;
+	            turnRight(30);
+	            turnGunRight(180);
+			}	
 
-			setAdjustRadarForRobotTurn(false); // Keep the radar still when bot turns
-            setAdjustGunForRobotTurn(false); // Keep the gun still when bot turns
-			ahead(110);
-			forward = true;
-			turnLeft(25);
-            turnGunRight(180);
-            back(70);
-			forward = false;
-            // turnGunRight(360);
-            turnRight(25);
-            turnGunRight(180);			
+			turn *= -1;
 		}
 	}
 
@@ -114,9 +99,6 @@ public class TopGun extends Robot
 	 * onHitByBullet: What to do when you're hit by a bullet
 	 */
 	public void onHitByBullet(HitByBulletEvent e) {
-		// Return fire
-		//turnGunRight(e.getBearing());
-		//fire(2);
 
 		// Change body color to indicate the power of the bullet
 		if (e.getPower() >= 3) {
@@ -165,16 +147,10 @@ public class TopGun extends Robot
 
 		if (forward) { 	//if moving forward bounce off the wall
 			back(200);
-			//turnRight(30);
-			//back(15);
-			//turnRight(60);
 			forward = false;
 			turnRight(8);
 		} else{
 			ahead(200); //if moving backward bounch off the wall
-			//turnRight(30);
-			//ahead(15);
-			//turnRight(60);
 			forward = true;
 			turnRight(8);
 		}
@@ -196,6 +172,7 @@ public class TopGun extends Robot
 			}
 		}
 	}
+
 	public boolean nearWall() {
 		if(forward){
 		    if(getX() + 100 >= getBattleFieldWidth() && getHeading() > 270 - 45 && getHeading() < 270 + 45)
@@ -218,5 +195,5 @@ public class TopGun extends Robot
 			return true;
 		}
 			return false;
-		}			
+	}			
 }
