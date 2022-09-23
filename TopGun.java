@@ -47,16 +47,15 @@ public class TopGun extends Robot
 
 			setAdjustRadarForRobotTurn(false); // Keep the radar still when bot turns
             setAdjustGunForRobotTurn(false); // Keep the gun still when bot turns
-			ahead(100);
+			ahead(110);
 			forward = true;
-			turnLeft(30);
+			turnLeft(25);
             turnGunRight(180);
-            back(50);
+            back(70);
 			forward = false;
-            turnGunRight(360);
-            turnRight(30);
-            turnGunRight(180);
-			turnRight(3);			
+            // turnGunRight(360);
+            turnRight(25);
+            turnGunRight(180);			
 		}
 	}
 
